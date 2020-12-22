@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "875226425045",
+    "firebase_url": "https://chemicalcards-edb80.firebaseio.com",
+    "project_id": "chemicalcards-edb80",
+    "storage_bucket": "chemicalcards-edb80.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875226425045:android:4a27b69e8d9082f1e4245c",
+        "android_client_info": {
+          "package_name": "com.example.HeyThere"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875226425045-j46rnh2kplkq78kg9pte56unbsrumu74.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbioI_jLJuumDPxuz3OMg-wjEELaJklxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875226425045-arrpl0ndjsi1vn86t331it2v9o169opi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
