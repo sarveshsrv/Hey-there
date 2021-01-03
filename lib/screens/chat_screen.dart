@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final _firestore = FirebaseFirestore.instance;
+User loggedInUser;
 
 class ChatScreen extends StatefulWidget {
   static String id = 'chat_screen';
@@ -19,7 +20,7 @@ class _ChatScreenState extends State<ChatScreen> {
   // final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   String msgText;
-  User loggedInUser;
+  //User loggedInUser;
   //The FirebaseUser class has been (breaking)renamed to User.
 
   @override
@@ -141,11 +142,16 @@ class MsgStream extends StatelessWidget {
         final messages = snapshot.data.docs;
         List<Widget> messageWidgets = [];
         for (var message in messages) {
+          final currentUserID = loggedInUser.email;
           final messageText = message.data()['text'];
           final messageSender = message.data()['sender'];
-          final messageWidget =
-              MsgBubble(sender: messageSender, text: messageText);
-          messageWidgets.add(messageWidget);
+
+          final messageBubble = MsgBubble(
+              sender: messageSender,
+              text: messageText,
+              // alternative of if statement
+              isCurrentUser: currentUserID == messageSender);
+          messageWidgets.add(messageBubble);
         }
         return Expanded(
           child: ListView(
@@ -159,15 +165,18 @@ class MsgStream extends StatelessWidget {
 }
 
 class MsgBubble extends StatelessWidget {
+  MsgBubble({this.sender, this.text, this.isCurrentUser});
   final String sender;
   final String text;
-  MsgBubble({this.sender, this.text});
+  final bool isCurrentUser;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment:
+            isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             sender,
@@ -177,15 +186,27 @@ class MsgBubble extends StatelessWidget {
             ),
           ),
           Material(
-            borderRadius: BorderRadius.circular(25),
-            color: Colors.blueAccent[100],
+            //Changing the shape of the text box accroding to the user
+            borderRadius: isCurrentUser
+                ? BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                  )
+                : BorderRadius.only(
+                    topRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                  ),
+            //changing colour for different users
+            color: isCurrentUser ? Colors.blueAccent[100] : Colors.teal,
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Text(
                 // '$Text from $sender',
                 text,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: isCurrentUser ? Colors.white : Colors.black,
                   fontSize: 20.0,
                 ),
               ),
