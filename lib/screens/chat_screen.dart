@@ -72,8 +72,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 msgStream();
 
                 //Implement logout functionality
-                // _auth.signOut();
-                // Navigator.pushNamed(context, RegistrationScreen.id);
+                _auth.signOut();
+                Navigator.pushNamed(context, RegistrationScreen.id);
               }),
         ],
         title: Text('⚡️Chat'),
@@ -139,7 +139,7 @@ class MsgStream extends StatelessWidget {
             ),
           );
         }
-        final messages = snapshot.data.docs;
+        final messages = snapshot.data.docs.reversed;
         List<Widget> messageWidgets = [];
         for (var message in messages) {
           final currentUserID = loggedInUser.email;
@@ -155,6 +155,7 @@ class MsgStream extends StatelessWidget {
         }
         return Expanded(
           child: ListView(
+            reverse:true,
             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
             children: messageWidgets,
           ),
@@ -187,17 +188,13 @@ class MsgBubble extends StatelessWidget {
           ),
           Material(
             //Changing the shape of the text box accroding to the user
-            borderRadius: isCurrentUser
-                ? BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30),
-                  )
-                : BorderRadius.only(
-                    topRight: Radius.circular(30),
+            borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(isCurrentUser?30:0),
+                    topRight: Radius.circular(isCurrentUser?30:0),
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30),
                   ),
+               
             //changing colour for different users
             color: isCurrentUser ? Colors.blueAccent[100] : Colors.teal,
             child: Padding(
