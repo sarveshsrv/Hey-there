@@ -80,15 +80,17 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           children: <Widget>[
             Row(
               children: <Widget>[
-                Hero(
-                  tag: 'logo',
-                  child: Container(
-                      child: Image.asset('images/logo.png'),
-                      //height: controller.value),
-                      //For curved animation, we use animation.value
-                      //Multiply with 100 or any large number to see the proper change
-                      // height: animation.value * 100),
-                      height: 40),
+                Flexible(
+                  child: Hero(
+                    tag: 'logo',
+                    child: Container(
+                        child: Image.asset('images/logo.png'),
+                        //height: controller.value),
+                        //For curved animation, we use animation.value
+                        //Multiply with 100 or any large number to see the proper change
+                        // height: animation.value * 100),
+                        height: 40),
+                  ),
                 ),
                 TypewriterAnimatedTextKit(
                   text: ['Flash Chat'],
