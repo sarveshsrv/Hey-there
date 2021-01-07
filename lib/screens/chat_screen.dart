@@ -1,5 +1,3 @@
-//import 'dart:html';
-
 import 'package:HeyThere/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:HeyThere/constants.dart';
